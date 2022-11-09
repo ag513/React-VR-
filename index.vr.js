@@ -5,64 +5,55 @@ import {
   Pano,
   Text,
   View,
-  VrButton
+  VrButton,
+  Box,
+  Sphere,
+  Cylinder
 } from 'react-vr';
 
 
-
-class Name extends React.Component{
-  render(){
-    return(
-      <Text
-        style={{
-          backgroundColor: '#777879',
-          fontSize: 0.8,
-          fontWeight: '400',
-          layoutOrigin: [0.5, 0.5],
-          paddingLeft: 0.2,
-          paddingRight: 0.2,
-          textAlign: 'center',
-          textAlignVertical: 'center',
-          transform: [{translate: [0, 0, -3]}],
-        }}>
-        {this.props.text}
-      </Text>
-    )
-  }
-}
-
 export default class WelcomeVR extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      txt:'Hello 0',
-      imgSrc: 'chess-world.jpg'
-    };
-    this.i=0;
-  }
-  start(){
-    if(this.i%2==0){
-      this.setState({
-        txt:'State 1',
-        imgSrc: 'world.jpg'
-      });
-    } else{
-      this.setState({
-        txt:'State 2',
-        imgSrc: "chess-world.jpg"
-      });
-    }
-    this.i++;
-  }
   render() {
     return (
       <View>
-        <Pano source={asset(this.state.imgSrc)}/>
-        <VrButton onClick={()=> this.start()}>
-          <Name text="Ab"></Name>
-          <Name text="GN"></Name>
-          <Name text="AG"></Name>
-        </VrButton>
+        <Pano source={asset('world.jpg')}/>
+        <Box
+         dimWidth={0.35}
+         dimDepth={0.35}
+         dimHeight={0.40}
+        // wireframe={true}
+        texture={asset("chess-world.jpg")}
+         style={
+          {
+            //color:'red',
+            transform:[{translate:[0,0,-2]}, {rotateX:45}, {rotateY:45},{scale:[2,0.85,1.5]}]
+          }
+         }>
+        </Box>
+        <Sphere
+          radius={0.1}
+          widthSegments={90}
+          heightSegments={90}
+          texture={asset("chess-world.jpg")}
+          style={
+            {
+              color:'white',
+              transform:[{translate:[0.75,0,-2]}, {rotateX:45}, {rotateY:45},{scale:[2,2,2]}]
+            }}
+          />
+          <Cylinder
+             radiusTop={0.2}
+             radiusBottom={0.2}
+             dimHeight={0.3}
+             segments={30}
+             texture={asset("chess-world.jpg")}
+             style={
+              {
+                color:'white',
+                transform:[{translate:[0,0,-2]}, {rotateX:45}, {rotateY:45}]
+              }
+             }
+          />
       </View>
     );
   }
